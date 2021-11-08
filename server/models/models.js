@@ -22,10 +22,11 @@ const userModel = {
             },
         },
     },
-    password: {},
+    password: {
+    },
 };
 const basketModel = {};
-const basketItemsModel = {
+const basketItemModel = {
     quantity: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -56,7 +57,7 @@ const categoryModel = {
 module.exports = {
     userModel,
     basketModel,
-    basketItemsModel,
+    basketItemModel,
     productModel,
     categoryModel,
 };
