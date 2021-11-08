@@ -44,4 +44,4 @@ const category_model = {
     }
 }
 
-module.exports = { user_model, codeModel };
+module.exports = { user_model, basket_model, basket_items_model, products_model, category_model };
