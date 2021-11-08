@@ -7,6 +7,7 @@ const userModel = {
         type: Sequelize.STRING,
         primaryKey: true,
         allowNull: false,
+        unique: true,
         validate: {
             notNull: {
                 msg: "Must have Username.",
@@ -23,6 +24,7 @@ const userModel = {
         },
     },
     password: {
+        type: Sequelize.STRING
     },
 };
 const basketModel = {};
