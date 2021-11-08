@@ -75,3 +75,6 @@ typings/
 # FuseBox cache
 .fusebox/
 .gitattributes
+
+#DS_Store
+**/.DS_Store
