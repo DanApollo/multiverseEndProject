@@ -7,41 +7,56 @@ const userModel = {
         type: Sequelize.STRING,
         primaryKey: true,
         allowNull: false,
+        validate: {
+            notNull: {
+                msg: "Must have Username.",
+            },
+        },
     },
     name: {
         type: Sequelize.STRING,
         allowNull: false,
+        validate: {
+            notNull: {
+                msg: "Must have name.",
+            },
+        },
     },
-    password: {
-
-    }
+    password: {},
 };
-const basketModel = {
-};
+const basketModel = {};
 const basketItemsModel = {
     quantity: {
         type: Sequelize.INTEGER,
-        allowNull: false
-    }
-}
-const productsModel = {
+        allowNull: false,
+    },
+};
+const productModel = {
+    title: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
+    price: {
+        type: Sequelize.FLOAT,
+        allowNull: false,
+    },
+    description: {
+        type: Sequelize.STRING,
+    },
+    image: {
+        type: Sequelize.STRING,
+    },
+};
+const categoryModel = {
     title: {
         type: Sequelize.STRING,
     },
-    price : {
-        type: Sequelize.INTEGER
-    },
-    description: {
-        type: Sequelize.STRING
-    },
-    image: {
-        type: Sequelize.STRING
-    }
-}
-const categoryModel = {
-    title: {
-        type: Sequelize.STRING
-    }
-}
+};
 
-module.exports = { userModel, basketModel, basketItemsModel, productsModel, categoryModel };
+module.exports = {
+    userModel,
+    basketModel,
+    basketItemsModel,
+    productModel,
+    categoryModel,
+};
