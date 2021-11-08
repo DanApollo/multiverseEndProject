@@ -2,7 +2,7 @@
 const Sequelize = require("sequelize");
 
 // model = outline of the data we'll store against an entity
-const user_model = {
+const userModel = {
     username: {
         type: Sequelize.STRING,
         primaryKey: true,
@@ -16,15 +16,15 @@ const user_model = {
 
     }
 };
-const basket_model = {
+const basketModel = {
 };
-const basket_items_model = {
+const basketItemsModel = {
     quantity: {
         type: Sequelize.INTEGER,
         allowNull: false
     }
 }
-const products_model = {
+const productsModel = {
     title: {
         type: Sequelize.STRING,
     },
@@ -38,10 +38,10 @@ const products_model = {
         type: Sequelize.STRING
     }
 }
-const category_model = {
+const categoryModel = {
     title: {
         type: Sequelize.STRING
     }
 }
 
-module.exports = { user_model, basket_model, basket_items_model, products_model, category_model };
+module.exports = { userModel, basketModel, basketItemsModel, productsModel, categoryModel };
