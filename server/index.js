@@ -1,7 +1,7 @@
 const { sequelize } = require("./connect");
-const routes = require("./routes/index-router.js");
+// const routes = require("./routes/index-router.js");
 
-app.use("/", routes);
+// app.use("/", routes);
 // app.use("/api/users", userRoutes);
 // app.use("/api/basket", basketRoutes);
 // app.use("/api/basket-items", basketItemsRoutes);
@@ -18,6 +18,6 @@ start()
     .then(() => console.log("Sequelize connected"))
     .catch((e) => console.log(`Caught error: ${e}`));
 
-app.listen(port, () => {
-    console.log(`listening on port ${port}`);
-});
+// app.listen(port, () => {
+//     console.log(`listening on port ${port}`);
+// });
