@@ -1,7 +1,12 @@
 const { sequelize } = require("./connect");
+const routes = require("./routes/index-router.js");
 
-app.use("/api/users", userRoutes);
-app.use("/api/codes", codeRoutes);
+app.use("/", routes);
+// app.use("/api/users", userRoutes);
+// app.use("/api/basket", basketRoutes);
+// app.use("/api/basket-items", basketItemsRoutes);
+// app.use("/api/product", productRoutes);
+// app.use("/api/category", categoryRoutes);
 
 async function start() {
     await sequelize.sync({
