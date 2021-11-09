@@ -4,15 +4,13 @@ h1 {
 
 .flextest {
   display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 50%;
-  grid-auto-rows: 20vh;
+  grid-template-columns: 1fr 1fr;
+  border: 5px grey;
 }
 
 img {
-  /*
   max-width: 200px;
-  max-height: 200px; */
+  max-height: 33vh; 
   object-fit: contain;
 }
 
