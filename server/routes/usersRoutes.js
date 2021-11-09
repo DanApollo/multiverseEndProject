@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
 // Gets all users
 .get('/', async (req, res) => {
     try {
-        const users = await Category.findAll({});
+        const users = await User.findAll({});
         res.status(201).send(users);
     } catch (error) {
         res.status(400).send(error.message);
@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
 // Updates a user by id
 .put('/:id', async (req, res) => {
     try {
-        const updatedUser = await User.update({name: req.body.name, password: req.body.password}, {where: {id: categoryId}});
+        const updatedUser = await User.update({name: req.body.name, password: req.body.password}, {where: req.params.id});
         res.status(201).send(updatedUser);
     } catch (error) {
         res.status(400).send(error.message);
