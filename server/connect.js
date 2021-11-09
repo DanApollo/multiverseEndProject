@@ -9,14 +9,14 @@ const {
 
 const sequelize = new Sequelize({
     dialect: "sqlite",
-    storage: "path/to/database.sqlite",
+    storage: "./path/to/database.sqlite",
 });
 
 const User = sequelize.define("User", userModel);
-const Basket = sequelize.define("Code", basketModel);
-const BasketItem = sequelize.define("Code", basketItemModel);
-const Product = sequelize.define("Code", productModel);
-const Category = sequelize.define("Code", categoryModel);
+const Basket = sequelize.define("Basket", basketModel);
+const BasketItem = sequelize.define("BasketItem", basketItemModel);
+const Product = sequelize.define("Product", productModel);
+const Category = sequelize.define("Category", categoryModel);
 
 User.hasOne(Basket);
 Basket.belongsTo(User);
