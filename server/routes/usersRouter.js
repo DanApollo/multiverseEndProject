@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/', async (req, res) => {
     try {
         const user = await User.create(req.body);
-        res.status(201).send(category);
+        res.status(201).send(user);
     } catch(error) {
         res.status(400).send(error.message);
     };
@@ -17,7 +17,7 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         const users = await Category.findAll({});
-        res.status(201).send(categories);
+        res.status(201).send(users);
     } catch (error) {
         res.status(400).send(error.message);
     };
