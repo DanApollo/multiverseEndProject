@@ -1,8 +1,9 @@
-const express = require('express');
-const Router = express.Router();
 const { Category } = require('../connect');
 
-Router.post('/', async (req, res) => {
+const express = require('express');
+const router = express.Router();
+
+router.post('/', async (req, res) => {
     try {
         const category = await Category.create(req.body);
         res.status(201).send(category);
@@ -55,4 +56,4 @@ Router.post('/', async (req, res) => {
 });
 
 
-module.exports = Router
+module.exports = router

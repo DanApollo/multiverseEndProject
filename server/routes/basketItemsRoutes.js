@@ -10,20 +10,20 @@ router.post('/', async (req, res) => {
     } catch(error) {
         res.status(400).send(error.message);
     };
-});
+})
 
 //gets all basket items
-router.get('/', async (req, res) => {
+.get('/', async (req, res) => {
     try {
         const basketItems = await BasketItem.findAll({});
         res.status(201).send(basketItems);
     } catch (error) {
         res.status(400).send(error.message);
     };
-});
+})
 
 //gets a single basket item
-router.get('/:id', async (req, res) => {
+.get('/:id', async (req, res) => {
     try {
         const basketItemId = req.params.id;
         const basketItem = await BasketItem.findOne({where: {id: basketItemId}});
@@ -31,10 +31,10 @@ router.get('/:id', async (req, res) => {
     } catch (error) {
         res.status(400).send(error.message);
     };
-});
+})
 
 //updates basket item
-router.put('/:id', async (req, res) => {
+.put('/:id', async (req, res) => {
     try {
         const basketItemId = req.params.id;
         const updatedBasketItem = await BasketItem.update({quantity: req.body.quantity}, {where: {id: basketItemId}});
@@ -42,10 +42,10 @@ router.put('/:id', async (req, res) => {
     } catch (error) {
         res.status(400).send(error.message);
     };
-});
+})
 
 //deletes basketItem
-router.delete('/:id', async (req, res) => {
+.delete('/:id', async (req, res) => {
     try {
         const basketItemId = req.params.id;
         const deletedBasketItem = await BasketItem.destroy({where: {id: basketItemId}});
@@ -54,3 +54,5 @@ router.delete('/:id', async (req, res) => {
         res.status(400).send(error.message);
     };
 });
+
+module.exports = router;
