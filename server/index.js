@@ -1,12 +1,11 @@
 const { sequelize } = require("./connect");
-// const routes = require("./routes/index-router.js");
+const routes = require("./routes/indexRouter.js");
+const app = express();
+const port = 3000;
 
-// app.use("/", routes);
-// app.use("/api/users", userRoutes);
-// app.use("/api/basket", basketRoutes);
-// app.use("/api/basket-items", basketItemsRoutes);
-// app.use("/api/product", productRoutes);
-// app.use("/api/category", categoryRoutes);
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use("/", routes);
 
 async function start() {
     await sequelize.sync({
@@ -18,6 +17,6 @@ start()
     .then(() => console.log("Sequelize connected"))
     .catch((e) => console.log(`Caught error: ${e}`));
 
-// app.listen(port, () => {
-//     console.log(`listening on port ${port}`);
-// });
+app.listen(port, () => {
+    console.log(`listening on port ${port}`);
+});
