@@ -1,11 +1,8 @@
-// get the seq package
 const Sequelize = require("sequelize");
 
-// model = outline of the data we'll store against an entity
 const userModel = {
     username: {
         type: Sequelize.STRING,
-        primaryKey: true,
         allowNull: false,
         unique: true,
         validate: {
@@ -21,6 +18,9 @@ const userModel = {
             notNull: {
                 msg: "Must have name.",
             },
+            isAlpha: {
+                msg: "Can only contain letters."
+            },
         },
     },
     password: {
@@ -32,27 +32,59 @@ const basketItemModel = {
     quantity: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        validate: {
+            notNull: {
+                msg: "Must have quantity.",
+            },
+            isInt: {
+                msg: "Quantity must only contain integers."
+            },
+        },
     },
 };
 const productModel = {
     title: {
         type: Sequelize.STRING,
         allowNull: false,
+        validate: {
+            notNull: {
+                msg: "Must have title.",
+            },
+        },
     },
     price: {
         type: Sequelize.FLOAT,
         allowNull: false,
+        validate: {
+            notNull: {
+                msg: "Must have price.",
+            },
+            isFloat: {
+                msg: "Price input must be floating point."
+            },
+        },
     },
     description: {
         type: Sequelize.STRING,
     },
     image: {
         type: Sequelize.STRING,
+        validate: {
+            isURL: {
+                msg: "Must be an image link.",
+            },
+        },
     },
 };
 const categoryModel = {
     title: {
         type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+            notNull: {
+                msg: "Must have title.",
+            }
+        }
     },
 };
 
