@@ -18,9 +18,10 @@ const userModel = {
             notNull: {
                 msg: "Must have name.",
             },
-            isAlpha: {
-                msg: "Can only contain letters."
-            },
+            is: {
+                args: [/^[a-zA-Z\s]*$/i],
+                msg: "Can only contain letters and spaces."
+            }
         },
     },
     password: {
