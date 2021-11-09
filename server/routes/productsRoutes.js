@@ -54,7 +54,7 @@ router.post('/', async (req, res) => {
 .delete('/:id', async (req, res) => {
     try {
         await Product.destroy({where: { id: req.params.id }});
-        res.status(201).send(`Product: ${req.params.id} has been deleted`);
+        res.status(200).send(`Product: ${req.params.id} has been deleted`);
     } catch (error) {
         res.status(400).send(error.message);
     };

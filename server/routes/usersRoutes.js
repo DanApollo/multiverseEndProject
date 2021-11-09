@@ -44,7 +44,7 @@ router.post('/', async (req, res) => {
         await user.save();
         await user.reload();
 
-        res.status(201).send(user);
+        res.status(200).send(user);
     } catch (error) {
         res.status(400).send(error.message);
     };
@@ -54,7 +54,7 @@ router.post('/', async (req, res) => {
 .delete('/:id', async (req, res) => {
     try {
         await User.destroy({where: { id: req.params.id }});
-        res.status(201).send(`Account for user: ${req.params.id} has been deleted`);
+        res.status(200).send(`Account for user: ${req.params.id} has been deleted`);
     } catch (error) {
         res.status(400).send(error.message);
     };
