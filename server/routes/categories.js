@@ -1,29 +1,28 @@
+const express = require('express');
+const Router = express.Router();
 const { Category } = require('../connect');
 
-const express = require('express');
-const router = express.Router();
-
-router.post('/', async (req, res) => {
+Router.post('/', async (req, res) => {
     try {
         const category = await Category.create(req.body);
         res.status(201).send(category);
     } catch(error) {
         res.status(400).send(error.message);
     };
-});
+})
 
 //gets all categories
-router.get('/', async (req, res) => {
+.get('/', async (req, res) => {
     try {
         const categories = await Category.findAll({});
         res.status(201).send(categories);
     } catch (error) {
         res.status(400).send(error.message);
     };
-});
+})
 
 //gets a single category
-router.get('/:id', async (req, res) => {
+.get('/:id', async (req, res) => {
     try {
         const categoryId = req.params.id;
         const category = await Category.findOne({where: {id: categoryId}});
@@ -31,10 +30,10 @@ router.get('/:id', async (req, res) => {
     } catch (error) {
         res.status(400).send(error.message);
     };
-});
+})
 
 //updates category
-router.put('/:id', async (req, res) => {
+.put('/:id', async (req, res) => {
     try {
         const categoryId = req.params.id;
         const updatedCategory = await Category.update({title: req.body.title}, {where: {id: categoryId}});
@@ -42,13 +41,13 @@ router.put('/:id', async (req, res) => {
     } catch (error) {
         res.status(400).send(error.message);
     };
-});
+})
 
 //deletes category
-router.delete('/:id', async (req, res) => {
+.delete('/:id', async (req, res) => {
     try {
         const categoryId = req.params.id;
-        const deletedCategory = await Category.destroy(where: {id: categoryId});
+        const deletedCategory = await Category.destroy({where: {id: categoryId}});
         res.status(201).send(deletedCategory);
     } catch (error) {
         res.status(400).send(error.message);
@@ -56,3 +55,4 @@ router.delete('/:id', async (req, res) => {
 });
 
 
+module.exports = Router
