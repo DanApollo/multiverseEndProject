@@ -1,15 +1,14 @@
 import 'normalize.css';
 import './App.css';
+import ky from 'ky';
 import React, { useState, useEffect } from 'react'
-import { ProductRow, ViewProduct, ListProducts } from './components/products'
-import backendProducts from './services/backendProducts'
 
 import {
-  BrowserRouter as Router,
   Switch, Route, Link,
   useRouteMatch,
-  useHistory
 } from "react-router-dom"
+
+import { ViewProduct, ListProducts } from './components/products'
 
 const API_LINK = "http://localhost:3001"
 
@@ -21,7 +20,7 @@ function App() {
     console.log(product);
     console.log(product.id);
     let c = {...cart};
-    if (c[product.id] != undefined) {
+    if (c[product.id] !== undefined) {
       c[product.id] += 1;
       //setCart({...cart, `${product.title}`: 1})
     } else {
@@ -33,8 +32,8 @@ function App() {
   const [products, setProducts] = useState([])
   useEffect(() => {
     console.log('effect');
-    backendProducts
-    .getAll()
+    ky
+    .get(`${API_LINK}/products`).json()
     .then(response => {
       //console.log('promise fulfilled');
       setProducts(response);
