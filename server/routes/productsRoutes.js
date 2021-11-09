@@ -3,6 +3,7 @@ const { Product } = require('../connect');
 const express = require('express');
 const router = express.Router();
 
+// Creates new product
 router.post('/', async (req, res) => {
     try {
         const product = await Product.create(req.body);
@@ -15,41 +16,45 @@ router.post('/', async (req, res) => {
 //gets all products
 .get('/', async (req, res) => {
     try {
-        const products = await Product.findAll({});
-        res.status(201).send(products);
+        const products = (await Product.findAll({}) || undefined);
+        res.status(200).send(products);
     } catch (error) {
         res.status(400).send(error.message);
     };
 })
 
-//gets a single product
+//gets a single product by ID
 .get('/:id', async (req, res) => {
     try {
-        const productId = req.params.id;
-        const product = await Product.findOne({where: {id: productId}});
-        res.status(201).send(product);
+        const product = await Product.findByPk(req.params.id);
+        product == null ?
+        res.status(404).send(`Product: ${req.params.id} does not exist. Please check the id number and try again.`) :
+        res.status(200).send(product);
     } catch (error) {
         res.status(400).send(error.message);
     };
 })
 
-//updates product
+//updates product by ID
 .put('/:id', async (req, res) => {
     try {
-        const productId = req.params.id;
-        const updatedProduct = await Product.update({title: req.body.title, price: req.body.price, description: req.body.description, image: req.body.image}, {where: {id: productId}});
-        res.status(201).send(updatedProduct);
+        const product = await Product.findByPk(req.params.id);
+
+        await product.update(req.body);
+        await product.save();
+        await product.reload();
+
+        res.status(200).send(product);
     } catch (error) {
         res.status(400).send(error.message);
     };
 })
 
-//deletes product
+//deletes product by ID
 .delete('/:id', async (req, res) => {
     try {
-        const productId = req.params.id;
-        const deletedProduct = await Product.destroy({where: {id: productId}});
-        res.status(201).send(deletedProduct);
+        await Product.destroy({where: { id: req.params.id }});
+        res.status(200).send(`Product: ${req.params.id} has been deleted`);
     } catch (error) {
         res.status(400).send(error.message);
     };

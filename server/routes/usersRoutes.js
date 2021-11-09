@@ -16,8 +16,8 @@ router.post('/', async (req, res) => {
 // Gets all users
 .get('/', async (req, res) => {
     try {
-        const users = await Category.findAll({});
-        res.status(201).send(users);
+        const users = await User.findAll({});
+        res.status(200).send(users);
     } catch (error) {
         res.status(400).send(error.message);
     };
@@ -26,8 +26,10 @@ router.post('/', async (req, res) => {
 // Gets a single user by ID
 .get('/:id', async (req, res) => {
     try {
-        const user = await User.findOne({where: req.params.id});
-        res.status(201).send(user);
+        const user = await User.findByPk(req.params.id);
+        user == null ?
+        res.status(404).send(`User: ${req.params.id} does not exist. Please check the id number and try again.`) :
+        res.status(200).send(user);
     } catch (error) {
         res.status(400).send(error.message);
     };
@@ -36,8 +38,13 @@ router.post('/', async (req, res) => {
 // Updates a user by id
 .put('/:id', async (req, res) => {
     try {
-        const updatedUser = await User.update({name: req.body.name, password: req.body.password}, {where: {id: categoryId}});
-        res.status(201).send(updatedUser);
+        const user = await User.findByPk(req.params.id);
+
+        await user.update(req.body);
+        await user.save();
+        await user.reload();
+
+        res.status(200).send(user);
     } catch (error) {
         res.status(400).send(error.message);
     };
@@ -46,8 +53,8 @@ router.post('/', async (req, res) => {
 // Deletes user by id
 .delete('/:id', async (req, res) => {
     try {
-        const deletedUser = await User.destroy({where: req.params.id});
-        res.status(201).send(deletedUser);
+        await User.destroy({where: { id: req.params.id }});
+        res.status(200).send(`Account for user: ${req.params.id} has been deleted`);
     } catch (error) {
         res.status(400).send(error.message);
     };

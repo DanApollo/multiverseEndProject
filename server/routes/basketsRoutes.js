@@ -3,6 +3,7 @@ const { Basket } = require('../connect');
 const express = require('express');
 const router = express.Router();
 
+// Creates a new basket
 router.post('/', async (req, res) => {
     try {
         const basket = await Basket.create(req.body);
@@ -12,33 +13,33 @@ router.post('/', async (req, res) => {
     };
 })
 
-//gets all baskets
+// Gets all baskets
 .get('/', async (req, res) => {
     try {
         const baskets = await Basket.findAll({});
-        res.status(201).send(baskets);
+        res.status(200).send(baskets);
     } catch (error) {
         res.status(400).send(error.message);
     };
 })
 
-//gets a single basket
+// Gets a single basket by ID
 .get('/:id', async (req, res) => {
     try {
-        const basketId = req.params.id;
-        const basket = await Basket.findOne({where: {id: basketId}});
-        res.status(201).send(basket);
+        const basket = await Basket.findByPk(req.params.id);
+        basket == null ?
+        res.status(404).send(`Basket: ${req.params.id} does not exist. Please check the id number and try again.`) :
+        res.status(200).send(basket);
     } catch (error) {
         res.status(400).send(error.message);
     };
 })
 
-//deletes basket
+// Deletes basket by ID
 .delete('/:id', async (req, res) => {
     try {
-        const basketId = req.params.id;
-        const deletedBasket = await Basket.destroy({where: {id: basketId}});
-        res.status(201).send(deletedBasket);
+        await Basket.destroy({where: { id: req.params.id }});
+        res.status(200).send(`Account for user: ${req.params.id} has been deleted`);
     } catch (error) {
         res.status(400).send(error.message);
     };
