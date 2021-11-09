@@ -12,11 +12,23 @@ import { ViewProduct, ListProducts } from './components/products'
 
 const API_LINK = "http://localhost:3001"
 
+const ViewCart = (props) => {
+  let {products, cart} = props;
+  return (
+    <div>
+      {Object.keys(cart).map(productKey => {
+        return <h1 key={productKey}>Quantity: {cart[productKey]}</h1>
+      })
+    }
+    </div>
+  )
+}
+
 function App() {
   const [cart, setCart] = useState(() => {
     const saved = localStorage.getItem("cart");
     const initialValue = JSON.parse(saved);
-    return initialValue || {"-1": 0};
+    return initialValue || {};
   });
 
   const addToCart = (product) => {
@@ -51,7 +63,9 @@ function App() {
   const match = useRouteMatch('/products/:id')  
   const product = match ? products.find(product => product.id === Number(match.params.id)) : null
   //console.log(`product: ${product}`)
-  const itemsInCart = Object.values(cart).reduce((a, b) => {return a + b});
+  let cartValues = Object.values(cart);
+  cartValues = cartValues.length > 0 ? cartValues : [0];
+  const itemsInCart = cartValues.reduce((a, b) => {return a + b});
   console.log(`cart values: ${Object.values(cart)}`)
   let padding = { padding: 5 };
   return (
@@ -61,9 +75,12 @@ function App() {
         <Link style={padding} to="/new">new</Link>
       </div>
       <div>
-        <h2>Items in cart: {itemsInCart}</h2>
+        <Link to="/cart"><h2>Items in cart: {itemsInCart}</h2></Link>
       </div>
       <Switch>
+        <Route path="/cart">
+          <ViewCart cart={cart} products={products} />
+        </Route>
         <Route path="/products/:id">
             <ViewProduct product={product} addToCart={addToCart}/>        
         </Route>
