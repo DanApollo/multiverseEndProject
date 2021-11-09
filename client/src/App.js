@@ -1,5 +1,8 @@
 import './App.css';
-import {products} from './products';
+import ky from 'ky';
+import React, { useState, useEffect } from 'react'
+
+const API_LINK = "http://localhost:3001"
 
 const ProductRow = ({product}) => {
   console.log(product);
@@ -15,16 +18,34 @@ const ProductRow = ({product}) => {
   )
 }
 
+const ListProducts = ({products}) => {
+  return (
+    <>
+    {products.map(product => {
+      return <ProductRow key={product.title} product={product}></ProductRow>
+    })
+    }
+    </>
+  );
+}
+
 function App() {
-  console.log(products);
+  const [products, setProducts] = useState([])
+  useEffect(() => {
+    console.log('effect');
+    ky
+    .get(`${API_LINK}/products`).json()
+    .then(response => {
+      console.log('promise fulfilled');
+      setProducts(response);
+      console.log(response);
+    })
+  }, []);
   return (
     <div className="App">
       {/* <h1>Hello world :)</h1> */}
       <div className="flextest">
-        {products.map(product => {
-          return <ProductRow key={product.title} product={product}></ProductRow>
-        })
-        }
+        <ListProducts products={products} />
       </div>
     </div>
   );
