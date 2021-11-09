@@ -13,12 +13,18 @@ import { ViewProduct, ListProducts } from './components/products'
 const API_LINK = "http://localhost:3001"
 
 function App() {
-  const [cart, setCart] = useState({"-1": 0});
+  const [cart, setCart] = useState(() => {
+    const saved = localStorage.getItem("cart");
+    const initialValue = JSON.parse(saved);
+    return initialValue || {"-1": 0};
+  });
 
   const addToCart = (product) => {
+    /*
     console.log("adding to cart...")
     console.log(product);
     console.log(product.id);
+    */
     let c = {...cart};
     if (c[product.id] !== undefined) {
       c[product.id] += 1;
@@ -28,6 +34,7 @@ function App() {
     }
     console.log(`new cart: ${JSON.stringify(c)}`);
     setCart(c);
+    localStorage.setItem("cart", JSON.stringify(c));
   }
   const [products, setProducts] = useState([])
   useEffect(() => {
