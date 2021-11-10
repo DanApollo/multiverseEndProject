@@ -4,7 +4,10 @@ const userModel = {
     username: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
+        unique: {
+            args: true,
+            msg: 'Username already in use!'
+        },
         validate: {
             notNull: {
                 msg: "Must have Username.",
@@ -26,6 +29,16 @@ const userModel = {
     },
     password: {
         type: Sequelize.STRING
+    },
+    isAdmin: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+        validate: {
+            notNull: {
+                msg: "Cannot be null"
+            }
+        }
     },
 };
 const basketModel = {};
