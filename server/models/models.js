@@ -54,14 +54,14 @@ const productModel = {
         },
     },
     price: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
         allowNull: false,
         validate: {
             notNull: {
                 msg: "Must have price.",
             },
-            isInt: {
-                msg: "Price input must be Int."
+            isFloat: {
+                msg: "Price input must be floating point."
             },
         },
     },
