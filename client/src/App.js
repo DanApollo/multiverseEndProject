@@ -12,13 +12,47 @@ import { ViewProduct, ListProducts } from './components/products'
 
 const API_LINK = "http://localhost:3001"
 
+const ViewCartProduct = ({product, quantity}) => {
+  return (
+  <div>
+        <h1>{product.title}</h1>
+        <img src={product.image} alt={product.name}></img>
+        <p>£{product.price}</p>
+        <p>Quantity: {quantity}</p>
+  </div>
+  )
+}
+
+const ViewCart = (props) => {
+  let {products, cart} = props;
+  return (
+    <div>
+      {Object.keys(cart).map(productKey => {
+        let product = products.find(prod => prod.id == productKey) 
+        return (
+          <ViewCartProduct key={product.id} product={product} quantity={cart[productKey]} />
+        )
+      })
+    }
+    </div>
+  )
+}
+
 function App() {
-  const [cart, setCart] = useState({"-1": 0});
+  const [cart, setCart] = useState(() => {
+    const saved = localStorage.getItem("cart");
+    const initialValue = JSON.parse(saved);
+    return initialValue || {};
+  });
+
+  const [products, setProducts] = useState([])
 
   const addToCart = (product) => {
+    /*
     console.log("adding to cart...")
     console.log(product);
     console.log(product.id);
+    */
     let c = {...cart};
     if (c[product.id] !== undefined) {
       c[product.id] += 1;
@@ -28,8 +62,9 @@ function App() {
     }
     console.log(`new cart: ${JSON.stringify(c)}`);
     setCart(c);
+    localStorage.setItem("cart", JSON.stringify(c));
   }
-  const [products, setProducts] = useState([])
+
   useEffect(() => {
     console.log('effect');
     ky
@@ -44,7 +79,9 @@ function App() {
   const match = useRouteMatch('/products/:id')  
   const product = match ? products.find(product => product.id === Number(match.params.id)) : null
   //console.log(`product: ${product}`)
-  const itemsInCart = Object.values(cart).reduce((a, b) => {return a + b});
+  let cartValues = Object.values(cart);
+  cartValues = cartValues.length > 0 ? cartValues : [0];
+  const itemsInCart = cartValues.reduce((a, b) => {return a + b});
   console.log(`cart values: ${Object.values(cart)}`)
   let padding = { padding: 5 };
   return (
@@ -54,9 +91,12 @@ function App() {
         <Link style={padding} to="/new">new</Link>
       </div>
       <div>
-        <h2>Items in cart: {itemsInCart}</h2>
+        <Link to="/cart"><h2>Items in cart: {itemsInCart}</h2></Link>
       </div>
       <Switch>
+        <Route path="/cart">
+          <ViewCart cart={cart} products={products} />
+        </Route>
         <Route path="/products/:id">
             <ViewProduct product={product} addToCart={addToCart}/>        
         </Route>
