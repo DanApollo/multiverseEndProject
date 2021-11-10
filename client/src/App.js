@@ -12,25 +12,33 @@ import { ViewProduct, ListProducts } from './components/products'
 
 const API_LINK = "http://localhost:3001"
 
-const ViewCartProduct = ({product, quantity}) => {
+const ViewCartProduct = ({product, cart, setCart}) => {
+  const changeCartValue = (value, product) => {
+    let c = {...cart};
+    c[product.id] = parseInt(value);
+    console.log(`new cart: ${JSON.stringify(c)}`);
+    setCart(c);
+    localStorage.setItem("cart", JSON.stringify(c));
+  }
   return (
   <div>
         <h1>{product.title}</h1>
         <img src={product.image} alt={product.name}></img>
         <p>£{product.price}</p>
-        <p>Quantity: {quantity}</p>
+        <label for="tentacles">Quantity:</label>
+        <input type="number" id={product.id} name={product.name} min="1" max="100" value={cart[product.id]} onChange={e => changeCartValue(e.target.value, product)}></input>
   </div>
   )
 }
 
 const ViewCart = (props) => {
-  let {products, cart} = props;
+  let {products, cart, setCart} = props;
   return (
     <div>
       {Object.keys(cart).map(productKey => {
         let product = products.find(prod => prod.id == productKey) 
         return (
-          <ViewCartProduct key={product.id} product={product} quantity={cart[productKey]} />
+          <ViewCartProduct key={product.id} product={product} cart={cart} setCart={setCart} />
         )
       })
     }
@@ -95,7 +103,7 @@ function App() {
       </div>
       <Switch>
         <Route path="/cart">
-          <ViewCart cart={cart} products={products} />
+          <ViewCart cart={cart} setCart={setCart} products={products} />
         </Route>
         <Route path="/products/:id">
             <ViewProduct product={product} addToCart={addToCart}/>        
