@@ -1,4 +1,4 @@
-const { Product } = require('../connect');
+const { Product, Category } = require('../connect');
 
 const express = require('express');
 const router = express.Router();
@@ -6,7 +6,19 @@ const router = express.Router();
 // Creates new product
 router.post('/', async (req, res) => {
     try {
-        const product = await Product.create(req.body);
+        let item = req.body
+        categoryTitle = item.category
+        delete item.category
+        if (await Category.findOne({where: {title: categoryTitle}}) === null) {
+            await Category.create({title: categoryTitle})
+        }
+        
+        const category = await Category.findOne({where: {title: categoryTitle}})
+        const product = await Product.create(item);
+
+        await category.addProduct(product)
+        await product.reload()
+
         res.status(201).send(product);
     } catch(error) {
         res.status(400).send(error.message);
