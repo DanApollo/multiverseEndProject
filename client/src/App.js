@@ -20,13 +20,20 @@ const ViewCartProduct = ({product, cart, setCart}) => {
     setCart(c);
     localStorage.setItem("cart", JSON.stringify(c));
   }
+
+  const removeItemFromCart = (product) => {
+    let c = {...cart};
+    delete c[product.id];
+    setCart(c);
+  }
   return (
   <div>
         <h1>{product.title}</h1>
         <img src={product.image} alt={product.name}></img>
         <p>£{product.price}</p>
-        <label for="tentacles">Quantity:</label>
+        <label for="quantity">Quantity:</label>
         <input type="number" id={product.id} name={product.name} min="1" max="100" value={cart[product.id]} onChange={e => changeCartValue(e.target.value, product)}></input>
+        <button type="button" onClick={() => removeItemFromCart(product)}>remove item from cart</button>
   </div>
   )
 }
