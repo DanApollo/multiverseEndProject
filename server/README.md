@@ -1,2 +1,0 @@
-# multiverseEndProject
-Hello, world!
