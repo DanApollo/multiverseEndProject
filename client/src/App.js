@@ -12,7 +12,7 @@ import { ViewProduct, ListProducts } from './components/products'
 
 const API_LINK = "http://localhost:3001"
 
-function App() {
+function App({ user = null }) {
   const [cart, setCart] = useState({"-1": 0});
 
   const addToCart = (product) => {
@@ -52,6 +52,7 @@ function App() {
       <div>
         <Link style={padding} to="/">home</Link>
         <Link style={padding} to="/new">new</Link>
+        <Link style={padding} to={user === null ? "/login" : "/logout"}>{user === null ? "Login" : "Logout"}</Link>
       </div>
       <div>
         <h2>Items in cart: {itemsInCart}</h2>
@@ -64,6 +65,13 @@ function App() {
           <ListProducts products={products} />
         </Route>
       </Switch>
+
+      <div>
+        {user?.isAdmin && <button>Create product</button>}
+        {user?.isAdmin && <button>Create category</button>}
+        {user?.isAdmin && <button>Create product</button>}
+        
+      </div>
 
       <div>
         <i>cute footer :O</i>
