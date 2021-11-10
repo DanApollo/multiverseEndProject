@@ -12,12 +12,26 @@ import { ViewProduct, ListProducts } from './components/products'
 
 const API_LINK = "http://localhost:3001"
 
+const ViewCartProduct = ({product, quantity}) => {
+  return (
+  <div>
+        <h1>{product.title}</h1>
+        <img src={product.image} alt={product.name}></img>
+        <p>£{product.price}</p>
+        <p>Quantity: {quantity}</p>
+  </div>
+  )
+}
+
 const ViewCart = (props) => {
   let {products, cart} = props;
   return (
     <div>
       {Object.keys(cart).map(productKey => {
-        return <h1 key={productKey}>Quantity: {cart[productKey]}</h1>
+        let product = products.find(prod => prod.id == productKey) 
+        return (
+          <ViewCartProduct key={product.id} product={product} quantity={cart[productKey]} />
+        )
       })
     }
     </div>
@@ -30,6 +44,8 @@ function App() {
     const initialValue = JSON.parse(saved);
     return initialValue || {};
   });
+
+  const [products, setProducts] = useState([])
 
   const addToCart = (product) => {
     /*
@@ -48,7 +64,7 @@ function App() {
     setCart(c);
     localStorage.setItem("cart", JSON.stringify(c));
   }
-  const [products, setProducts] = useState([])
+
   useEffect(() => {
     console.log('effect');
     ky
