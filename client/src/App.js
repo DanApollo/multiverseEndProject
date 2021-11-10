@@ -25,6 +25,7 @@ const ViewCartProduct = ({product, cart, setCart}) => {
     let c = {...cart};
     delete c[product.id];
     setCart(c);
+    localStorage.setItem("cart", JSON.stringify(c));
   }
   return (
   <div>
