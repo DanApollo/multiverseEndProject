@@ -24,7 +24,6 @@ function App() {
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState([])
   const [category, setCategory] = useState(0)
-  const [productLoadingError, setProductLoadingError] = useState("");
   const addToCart = (product) => {
     /*
     console.log("adding to cart...")
@@ -68,15 +67,16 @@ function App() {
         console.log(e);
     })
   }, []);
-  //console.log(products);
+
+  /* only pass the necessary product to the product page rather than all of them */
   const match = useRouteMatch('/products/:id')  
   const product = match ? products.find(product => product.id === Number(match.params.id)) : null
-  //console.log(`product: ${product}`)
+
   let cartValues = Object.values(cart);
-  cartValues = cartValues.length > 0 ? cartValues : [0];
-  const itemsInCart = cartValues.reduce((a, b) => {return a + (Number.isInteger(b) ? b : 0)}, 0);
-  console.log(`cart values: ${Object.values(cart)}`)
-  let padding = { padding: 5 };
+  cartValues = cartValues.length > 0 ? cartValues : [0]; // if cart is empty display 0 instead of NaN
+  const itemsInCart = cartValues.reduce((a, b) => {return a + (Number.isInteger(b) ? b : 0)}, 0); // don't add b if field is currently not an number (e.g. if field is empty because user has backspaced)
+  // console.log(`cart values: ${Object.values(cart)}`)
+  let padding = { padding: 5 }; // separate links (temporary styling)
   return (
     <div>
       <div>
