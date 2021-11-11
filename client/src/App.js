@@ -24,6 +24,7 @@ function App() {
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState([])
   const [category, setCategory] = useState(0)
+  const [productLoadingError, setProductLoadingError] = useState("");
   const addToCart = (product) => {
     /*
     console.log("adding to cart...")
@@ -50,6 +51,9 @@ function App() {
       setProducts(response);
       //console.log(response);
     })
+    .catch(e => {
+        console.log(e);
+    })
   }, []);
 
   useEffect(() => {
@@ -59,6 +63,9 @@ function App() {
       //console.log('promise fulfilled');
       setCategories(response);
       console.log(response);
+    })
+    .catch(e => {
+        console.log(e);
     })
   }, []);
   //console.log(products);
