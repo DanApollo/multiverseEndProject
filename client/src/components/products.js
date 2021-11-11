@@ -61,7 +61,7 @@ const CategorySelect = ({categories, category, setCategory}) => {
 */
 
 const ListProducts = ({products, categories, category, setCategory}) => {
-  products = products.filter(product => category == 0 || product.CategoryId == category);
+  products = products.filter(product => category === 0 || product.CategoryId === category);
   return (
     <>
     <CategorySelect categories={categories} category={category} setCategory={setCategory} />

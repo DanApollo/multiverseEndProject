@@ -37,7 +37,7 @@ let {products, cart, setCart} = props;
 return (
     <div>
     {Object.keys(cart).map(productKey => {
-        let product = products.find(prod => prod.id == productKey) 
+        let product = products.find(prod => prod.id === parseInt(productKey)) 
         return (
         <ViewCartProduct key={product.id} product={product} cart={cart} setCart={setCart} />
         )
