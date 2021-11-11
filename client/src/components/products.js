@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types';
+import React from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -17,7 +19,11 @@ const ProductRow = ({product}) => {
         </div>
       </div>
     )
-  }
+}
+
+ProductRow.propTypes = {
+  product: PropTypes.object.isRequired
+}
   
 const ViewProduct = (props) => {
     const {product, addToCart} = props;
@@ -30,6 +36,11 @@ const ViewProduct = (props) => {
         <button onClick={() => addToCart(product)}>Add to cart</button>
     </div>
     )
+}
+
+ViewProduct.propTypes = {
+  product: PropTypes.object.isRequired,
+  addToCart: PropTypes.func.isRequired
 }
 
 const CategorySelect = ({categories, category, setCategory}) => {

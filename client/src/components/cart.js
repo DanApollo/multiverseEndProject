@@ -1,3 +1,5 @@
+import React from 'react';
+
 const ViewCartProduct = ({product, cart, setCart}) => {
     const constrainCartValue = (value, product) => {
       value = parseInt(value);
