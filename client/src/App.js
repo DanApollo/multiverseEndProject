@@ -13,6 +13,14 @@ import { ViewProduct, ListProducts } from './components/products'
 const API_LINK = "http://localhost:3001"
 
 const ViewCartProduct = ({product, cart, setCart}) => {
+  const constrainCartValue = (value, product) => {
+    value = parseInt(value);
+    if (!Number.isInteger(value) || value < 1) {
+      value = 1;
+    }
+    changeCartValue(value, product);
+  }
+
   const changeCartValue = (value, product) => {
     let c = {...cart};
     c[product.id] = parseInt(value);
@@ -32,7 +40,7 @@ const ViewCartProduct = ({product, cart, setCart}) => {
         <img src={product.image} alt={product.name}></img>
         <p>£{product.price}</p>
         <label for="quantity">Quantity:</label>
-        <input type="number" id={product.id} name={product.name} min="1" max="100" value={cart[product.id]} onChange={e => changeCartValue(e.target.value, product)}></input>
+        <input type="number" id={product.id} name={product.name} min="1" max="100" value={cart[product.id]} onChange={e => changeCartValue(e.target.value, product)} onBlur={e => constrainCartValue(e.target.value, product)}></input>
         <button type="button" onClick={() => removeItemFromCart(product)}>remove item from cart</button>
   </div>
   )
@@ -96,7 +104,7 @@ function App() {
   //console.log(`product: ${product}`)
   let cartValues = Object.values(cart);
   cartValues = cartValues.length > 0 ? cartValues : [0];
-  const itemsInCart = cartValues.reduce((a, b) => {return a + b});
+  const itemsInCart = cartValues.reduce((a, b) => {return a + (Number.isInteger(b) ? b : 0)}, 0);
   console.log(`cart values: ${Object.values(cart)}`)
   let padding = { padding: 5 };
   return (
