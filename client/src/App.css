@@ -24,6 +24,7 @@ img {
 .product-image-container {
   display: flex;
   justify-content: center;
+  padding: 20px;
 }
 
 .product-description-container {

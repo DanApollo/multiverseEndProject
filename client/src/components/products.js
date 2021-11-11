@@ -1,7 +1,12 @@
 import { Link } from 'react-router-dom'
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 const ProductRow = ({product}) => {
-    console.log(product);
+    //console.log(product);
     return (
       <div className="flextest">
         <div className="product-image-container">
@@ -27,11 +32,41 @@ const ViewProduct = (props) => {
     )
 }
 
-const ListProducts = ({products}) => {
-return (
+const CategorySelect = ({categories, category, setCategory}) => {
+  return (
+  <Box sx={{ minWidth: 120 }}>
+  <FormControl fullWidth>
+  <InputLabel id="select-category-label">Categories</InputLabel>
+  <Select
+          labelId="select-category-label"
+          id="select-category"
+          value={category}
+          label="Category"
+          onChange={e => setCategory(e.target.value)}
+        >
+          <MenuItem value={0}>All</MenuItem>
+          {categories.map(category => {
+            return <MenuItem value={category.id}>{category.title}</MenuItem>
+          })}
+  </Select>
+  </FormControl>
+  </Box>
+  )
+}
+
+/*
+<MenuItem value={1}>Ten</MenuItem>
+<MenuItem value={2}>Twenty</MenuItem>
+<MenuItem value={3}>Thirty</MenuItem>
+*/
+
+const ListProducts = ({products, categories, category, setCategory}) => {
+  products = products.filter(product => category == 0 || product.CategoryId == category);
+  return (
     <>
+    <CategorySelect categories={categories} category={category} setCategory={setCategory} />
     {products.map(product => {
-    return <Link key={product.id} to={`/products/${product.id}`}><ProductRow product={product}></ProductRow></Link>
+      return <Link key={product.id} to={`/products/${product.id}`}><ProductRow product={product}></ProductRow></Link>
     })
     }
     </>

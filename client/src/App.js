@@ -11,7 +11,7 @@ import {
 import { ViewProduct, ListProducts } from './components/products'
 import { ViewCart } from './components/cart'
 
-const API_LINK = "http://localhost:3001"
+const API_LINK = "http://localhost:3001/api"
 
 function App() {
   const [cart, setCart] = useState(() => {
@@ -21,7 +21,8 @@ function App() {
   });
 
   const [products, setProducts] = useState([])
-
+  const [categories, setCategories] = useState([])
+  const [category, setCategory] = useState(0)
   const addToCart = (product) => {
     /*
     console.log("adding to cart...")
@@ -41,13 +42,22 @@ function App() {
   }
 
   useEffect(() => {
-    console.log('effect');
     ky
     .get(`${API_LINK}/products`).json()
     .then(response => {
       //console.log('promise fulfilled');
       setProducts(response);
       //console.log(response);
+    })
+  }, []);
+
+  useEffect(() => {
+    ky
+    .get(`${API_LINK}/categories`).json()
+    .then(response => {
+      //console.log('promise fulfilled');
+      setCategories(response);
+      console.log(response);
     })
   }, []);
   //console.log(products);
@@ -76,7 +86,7 @@ function App() {
             <ViewProduct product={product} addToCart={addToCart}/>        
         </Route>
         <Route path="/">
-          <ListProducts products={products} />
+          <ListProducts products={products} categories={categories} category={category} setCategory={setCategory} />
         </Route>
       </Switch>
 
