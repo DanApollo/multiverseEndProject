@@ -29,10 +29,9 @@ app.get('/', async (req, res) => {
 
 });
 
-app.get('/profile', requiresAuth(), async (req, res) => {
-    //if(req.oidc.user)
+app.get('/login', requiresAuth(), async (req, res) => {
     //{  res.send(database.findOne({ where: { name: req.oidc.user.name }})  }
-    res.send('hi')
+    res.send(req.oidc.user.name);
     //res.send(JSON.stringify(req.oidc.user.name))
     //res.render(<App user={userFromTheDatabase}/>)
 })
