@@ -34,7 +34,7 @@ const ViewProduct = (props) => {
     )
 }
 
-const CategorySelect = ({categories, category, setCategory, onChange}) => {
+const CategorySelect = ({categories, category, setCategory}) => {
   return (
   <Box sx={{ minWidth: 120 }}>
   <FormControl fullWidth>
@@ -44,10 +44,7 @@ const CategorySelect = ({categories, category, setCategory, onChange}) => {
           id="select-category"
           value={category}
           label="Category"
-          onChange={e => {
-            onChange();
-            setCategory(e.target.value)
-          }}
+          onChange={e => setCategory(e.target.value)}
         >
           <MenuItem value={0}>All</MenuItem>
           {categories.map(category => {
@@ -66,25 +63,17 @@ const CategorySelect = ({categories, category, setCategory, onChange}) => {
 */
 
 const ListProducts = ({products, categories, category, setCategory, isAdmin}) => {
-  const productsList = products.filter(product => category == 0 || product.CategoryId == category);
-  const [descriptionFormsOpen, setDescriptionFormsOpen] = useState(productsList.map(() => false));
+  const [descriptionFormsOpen, setDescriptionFormsOpen] = useState(products.reduce((acc, _, index) => ({ ...acc, [`product-${index}`]: false }), {}));
+  products = products.filter(product => category == 0 || product.CategoryId == category);
   return (
     <>
-    <CategorySelect categories={categories} category={category} setCategory={setCategory} onChange={() => setDescriptionFormsOpen(array => array.map(() => false))}/>
-    {productsList.map((product, index) => {
+    <CategorySelect categories={categories} category={category} setCategory={setCategory} />
+    {products.map((product, index) => {
       return (
         <div key={`product-${index}`}>
           <Link key={product.id} to={`/products/${product.id}`}><ProductRow product={product} showDescription={isAdmin}></ProductRow></Link>
-          {isAdmin && !descriptionFormsOpen[index] && (
-            <button onClick={() => setDescriptionFormsOpen(currentArray => {
-              const updatedArray = [...currentArray];
-              updatedArray[index] = true;
-              return updatedArray;
-            })}>
-              Change Description
-            </button>
-          )}
-          {descriptionFormsOpen[index] && (
+          {isAdmin && <button onClick={() => {setDescriptionFormsOpen(state => ({ ...state, [`product-${index}`]: true }))}}>Change Description</button>}
+          {descriptionFormsOpen[`product-${index}`] && (
             <form onSubmit={async (event) => {
               event.preventDefault();
               const form = event.target;
@@ -96,11 +85,7 @@ const ListProducts = ({products, categories, category, setCategory, isAdmin}) =>
                   body: JSON.stringify(data)
               });
               if (response.ok) {
-                setDescriptionFormsOpen(currentArray => {
-                  const updatedArray = [...currentArray];
-                  updatedArray[index] = false;
-                  return updatedArray;
-                })
+                setDescriptionFormsOpen(state => ({ ...state, [`product-${index}`]: false }))
               }
             }}>
               <label htmlFor={`item-${product.id}`}>Add a new decription:</label>
