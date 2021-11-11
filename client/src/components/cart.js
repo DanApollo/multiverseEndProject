@@ -25,7 +25,7 @@ const ViewCartProduct = ({product, cart, setCart}) => {
           <h1>{product.title}</h1>
           <img src={product.image} alt={product.name}></img>
           <p>£{product.price}</p>
-          <label for="quantity">Quantity:</label>
+          <label htmlFor="quantity">Quantity:</label>
           <input type="number" id={product.id} name={product.name} min="1" max="100" value={cart[product.id]} onChange={e => changeCartValue(e.target.value, product)} onBlur={e => constrainCartValue(e.target.value, product)}></input>
           <button type="button" onClick={() => removeItemFromCart(product)}>remove item from cart</button>
     </div>
