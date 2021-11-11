@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const ViewCartProduct = ({ product, cart, setCart }) => {
   const constrainCartValue = (value, product) => {
@@ -45,6 +46,12 @@ const ViewCartProduct = ({ product, cart, setCart }) => {
   );
 };
 
+ViewCartProduct.propTypes = {
+  product: PropTypes.object,
+  cart: PropTypes.object,
+  setCart: PropTypes.func
+}
+
 const ViewCart = (props) => {
   let { products, cart, setCart } = props;
   return (
@@ -63,5 +70,11 @@ const ViewCart = (props) => {
     </div>
   );
 };
+
+ViewCart.propTypes = {
+  products: PropTypes.array,
+  cart: PropTypes.object,
+  setCart: PropTypes.func
+}
 
 export { ViewCart };

@@ -22,7 +22,7 @@ const ProductRow = ({ product }) => {
 };
 
 ProductRow.propTypes = {
-  product: PropTypes.object.isRequired,
+  product: PropTypes.object,
 };
 
 const ViewProduct = (props) => {
@@ -39,8 +39,8 @@ const ViewProduct = (props) => {
 };
 
 ViewProduct.propTypes = {
-  product: PropTypes.object.isRequired,
-  addToCart: PropTypes.func.isRequired,
+  product: PropTypes.object,
+  addToCart: PropTypes.func,
 };
 
 const CategorySelect = ({ categories, category, setCategory }) => {
@@ -69,6 +69,12 @@ const CategorySelect = ({ categories, category, setCategory }) => {
   );
 };
 
+CategorySelect.propTypes = {
+  categories: PropTypes.array,
+  category: PropTypes.number,
+  setCategory: PropTypes.func
+};
+
 /*
 <MenuItem value={1}>Ten</MenuItem>
 <MenuItem value={2}>Twenty</MenuItem>
@@ -95,6 +101,13 @@ const ListProducts = ({ products, categories, category, setCategory }) => {
       })}
     </>
   );
+};
+
+ListProducts.propTypes = {
+  products: PropTypes.array,
+  categories: PropTypes.array,
+  category: PropTypes.number,
+  setCategory: PropTypes.func
 };
 
 export { ProductRow, ViewProduct, ListProducts };
