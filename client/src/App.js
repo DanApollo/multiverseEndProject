@@ -23,7 +23,6 @@ function App() {
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState([])
   const [category, setCategory] = useState(0)
-  const [productLoadingError, setProductLoadingError] = useState("");
   const addToCart = (product) => {
     /*
     console.log("adding to cart...")
