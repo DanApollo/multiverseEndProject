@@ -14,6 +14,7 @@ import { ViewCart } from './components/cart'
 const API_LINK = "http://localhost:3001/api"
 
 function App() {
+  const [user, setUser] = useState(null);
   const [cart, setCart] = useState(() => {
     const saved = localStorage.getItem("cart");
     const initialValue = JSON.parse(saved);
@@ -74,6 +75,7 @@ function App() {
       <div>
         <Link style={padding} to="/">home</Link>
         <Link style={padding} to="/new">new</Link>
+        <Link style={padding} to={{pathname: user === null ? "http://localhost:3001/login" : "/logout"}} target='_blank'>{user === null ? "Login" : "Logout"}</Link>
       </div>
       <div>
         <Link to="/cart"><h2>Items in cart: {itemsInCart}</h2></Link>
