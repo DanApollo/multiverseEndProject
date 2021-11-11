@@ -9,30 +9,26 @@ router
         try {
             // Assign request body to new variable.
             let item = req.body;
-            // Assign 'category' property of 'item' object to new variable.
-            categoryTitle = item.category;
-            // Delete 'category' property of 'item' object.
-            delete item.category;
-            // Create Product entity from 'item' object (without a category property).
+            // Assign 'categoryId' property of 'item' object to new variable.
+            let categoryId = item.categoryId;
+            // Delete 'categoryId' property of 'item' object.
+            delete item.categoryId;
+            // Create Product entity from 'item' object (without a category property) and assign to 'product' variable.
             const product = await Product.create(item);
             /* If category does not already exist in 'Category' table of database,
-            new category is created with title === 'categoryTitle. */
+            throw new Error. */
             if (
-                (await Category.findOne({
-                    where: { title: categoryTitle },
-                })) === null
+                (await Category.findByPk(categoryId)) === null
             ) {
-                await Category.create({ title: categoryTitle });
-            }
-            // Find 'Category' with 'title' property matching "categoryTitle"
-            const category = await Category.findOne({
-                where: { title: categoryTitle },
-            });
+                throw new Error("This Id does not match any current categories.");
+            } else {
+            // Find 'Category' with PK  matching "categoryId"
+            const category = await Category.findByPk(categoryId);
             // Add 'category' property back to 'product' as FK
             await category.addProduct(product);
             // Reloads 'product' variable to send updated JSON object back as response.
             await product.reload();
-
+        }
             res.status(201).send(product);
         } catch (error) {
             res.status(400).send(error.message);
