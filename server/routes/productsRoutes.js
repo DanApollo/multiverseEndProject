@@ -44,6 +44,15 @@ router
             res.status(400).send(error.message);
         }
     })
+    //gets all products with categories
+    .get("/cat", async (req, res) => {
+        try {
+            const products = (await Product.findAll({include: Category})) || undefined;
+            res.status(200).send(products);
+        } catch (error) {
+            res.status(400).send(error.message);
+        }
+    })
 
     //gets a single product by ID
     .get("/:id", async (req, res) => {
