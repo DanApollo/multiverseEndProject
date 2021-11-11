@@ -1,15 +1,15 @@
 const Sequelize = require("sequelize");
 const {
-    userModel,
-    basketModel,
-    basketItemModel,
-    productModel,
-    categoryModel,
+  userModel,
+  basketModel,
+  basketItemModel,
+  productModel,
+  categoryModel,
 } = require("./models/models");
 
 const sequelize = new Sequelize({
-    dialect: "sqlite",
-    storage: "./path/to/database.sqlite",
+  dialect: "sqlite",
+  storage: "./path/to/database.sqlite",
 });
 
 const User = sequelize.define("User", userModel);
