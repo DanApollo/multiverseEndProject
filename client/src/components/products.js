@@ -46,7 +46,7 @@ const CategorySelect = ({categories, category, setCategory}) => {
         >
           <MenuItem value={0}>All</MenuItem>
           {categories.map(category => {
-            return <MenuItem value={category.id}>{category.title}</MenuItem>
+            return <MenuItem key={category.id} value={category.id}>{category.title}</MenuItem>
           })}
   </Select>
   </FormControl>
