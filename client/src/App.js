@@ -86,7 +86,7 @@ function App() {
             <ViewProduct product={product} addToCart={addToCart}/>        
         </Route>
         <Route path="/">
-          <ListProducts products={products} category={category} />
+          <ListProducts products={products} categories={categories} category={category} setCategory={setCategory} />
         </Route>
       </Switch>
 
