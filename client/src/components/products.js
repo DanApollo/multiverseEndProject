@@ -31,7 +31,7 @@ const ListProducts = ({products}) => {
 return (
     <>
     {products.map(product => {
-    return <Link to={`/products/${product.id}`}><ProductRow key={product.id} product={product}></ProductRow></Link>
+    return <Link key={product.id} to={`/products/${product.id}`}><ProductRow product={product}></ProductRow></Link>
     })
     }
     </>
