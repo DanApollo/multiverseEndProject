@@ -22,7 +22,7 @@ function App() {
 
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState([])
-
+  const [category, setCategory] = useState(0)
   const addToCart = (product) => {
     /*
     console.log("adding to cart...")
@@ -86,7 +86,7 @@ function App() {
             <ViewProduct product={product} addToCart={addToCart}/>        
         </Route>
         <Route path="/">
-          <ListProducts products={products} />
+          <ListProducts products={products} category={category} />
         </Route>
       </Switch>
 

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
 const ProductRow = ({product}) => {
-    console.log(product);
+    //console.log(product);
     return (
       <div className="flextest">
         <div className="product-image-container">
@@ -27,11 +27,12 @@ const ViewProduct = (props) => {
     )
 }
 
-const ListProducts = ({products}) => {
+const ListProducts = ({products, category}) => {
+  products = products.filter(product => category == 0 || product.CategoryId == category);
 return (
     <>
     {products.map(product => {
-    return <Link key={product.id} to={`/products/${product.id}`}><ProductRow product={product}></ProductRow></Link>
+      return <Link key={product.id} to={`/products/${product.id}`}><ProductRow product={product}></ProductRow></Link>
     })
     }
     </>
