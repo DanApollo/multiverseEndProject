@@ -13,15 +13,16 @@ router
       let categoryId = item.categoryId;
       // Delete 'categoryId' property of 'item' object.
       delete item.categoryId;
-      // Create Product entity from 'item' object (without a category property) and assign to 'product' variable.
-      const product = await Product.create(item);
       /* If category does not already exist in 'Category' table of database,
             throw new Error. */
-      if ((await Category.findByPk(categoryId)) === null) {
+      const category = await Category.findByPk(categoryId);
+      let product;
+      if (category === null) {
         throw new Error("This Id does not match any current categories.");
       } else {
+        // Create Product entity from 'item' object (without a category property) and assign to 'product' variable.
+        product = await Product.create(item);
         // Find 'Category' with PK  matching "categoryId"
-        const category = await Category.findByPk(categoryId);
         // Add 'category' property back to 'product' as FK
         await category.addProduct(product);
         // Reloads 'product' variable to send updated JSON object back as response.

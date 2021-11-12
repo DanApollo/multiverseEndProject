@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "jest": "jest --watch",
+    "test-coverage": "jest --coverage",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon start.js"
   },
