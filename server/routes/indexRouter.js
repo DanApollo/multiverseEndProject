@@ -1,12 +1,12 @@
 // Main router entry point, sets up all route modules
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-const usersRouter = require('./usersRoutes');
-const basketsRouter = require('./basketsRoutes');
-const basketItemsRouter = require('./basketItemsRoutes');
-const productsRouter = require('./productsRoutes');
-const categoriesRouter = require('./categoriesRoutes');
+const usersRouter = require("./usersRoutes");
+const basketsRouter = require("./basketsRoutes");
+const basketItemsRouter = require("./basketItemsRoutes");
+const productsRouter = require("./productsRoutes");
+const categoriesRouter = require("./categoriesRoutes");
 
 router.use("/api/users", usersRouter);
 router.use("/api/baskets", basketsRouter);

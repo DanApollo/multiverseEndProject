@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Multiverse Client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Make sure a server is running before you start the client!
 
 ## Available Scripts
 

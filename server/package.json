@@ -6,7 +6,8 @@
   "scripts": {
     "jest": "jest --watch",
     "test-coverage": "jest --coverage",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon start.js"
   },
   "repository": {
     "type": "git",
@@ -26,7 +27,10 @@
     "sqlite3": "^5.0.2"
   },
   "devDependencies": {
+    "eslint": "^8.2.0",
+    "eslint-config-prettier": "^8.3.0",
     "jest": "^27.3.1",
+    "prettier": "2.4.1",
     "supertest": "^6.1.6"
   }
 }
