@@ -13,7 +13,7 @@ import PropTypes from "prop-types";
 const API_LINK = "http://localhost:3001/api";
 
 const Login = ({user, setUser}) => {
-  return <button onClick={() => setUser({...user, isAdmin: true})}>Login</button>
+  return <button onClick={() => setUser({...user, isAdmin: !user.isAdmin})}>{user.isAdmin ? "Logout" : "Login"}</button>
 }
 
 Login.propTypes = {

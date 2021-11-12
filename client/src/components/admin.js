@@ -27,7 +27,7 @@ const CreateProductForm = ({showProductForm, setProducts}) => {
       ky.get("http://localhost:3001/api/products")
       .json()
       .then((response) => {
-        //console.log('promise fulfilled');
+        console.log('setting products');
         setProducts(response);
         console.log(response);
       })
