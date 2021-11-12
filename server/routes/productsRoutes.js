@@ -84,6 +84,20 @@ router
       res.status(400).send(error.message);
     }
   })
+  //updates product category by ID
+  .put("/:prod_id/:cat_id", async (req, res) => {
+    try {
+      const product = await Product.findByPk(req.params.prod_id);
+      const category = await Category.findByPk(req.params.cat_id);
+
+      await category.addProduct(product)
+      await product.reload();
+
+      res.status(200).send(product);
+    } catch (error) {
+      res.status(400).send(error.message);
+    }
+  })
 
   //deletes product by ID
   .delete("/:id", async (req, res) => {

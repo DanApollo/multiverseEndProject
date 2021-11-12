@@ -145,20 +145,20 @@ const CreateProductForm = ({showProductForm, setProducts}) => {
         <CreateProductForm showProductForm={showProductForm} setProducts={setProducts} />
         {products.map((product) => {
           return (
-            <>
-            <form onSubmit={e => submitEditedProductDescription(e, product)}>
-            <h2>{product.title}</h2>
-            <p>{product.description}</p>
-            <img src={product.image} alt={product.name}></img>
-            <label>
-              <input
-                value={product.description}
-                onChange={e => editProductDescription(e.target.value, product.id)}/>
-            </label>
-              <button type="submit">submit edited description</button>
-              <button type="button" onClick={() => deleteProduct(product)}>delete item</button>
-            </form>   
-            </>
+            <div key={product.id}>
+                <form onSubmit={e => submitEditedProductDescription(e, product)}>
+                <h2>{product.title}</h2>
+                <p>{product.description}</p>
+                <img src={product.image} alt={product.name}></img>
+                <label>
+                <input
+                    value={product.description}
+                    onChange={e => editProductDescription(e.target.value, product.id)}/>
+                </label>
+                <button type="submit">submit edited description</button>
+                <button type="button" onClick={() => deleteProduct(product)}>delete item</button>
+                </form>   
+            </div>
           );
         })}
       </div>
