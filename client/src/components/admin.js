@@ -19,6 +19,10 @@ const CreateProductForm = ({showProductForm}) => {
       .then(response => {
         console.log(response);
       })
+      .catch(e => {
+        alert("error when creating product")
+        console.log(e);
+      })
     }
 
     const handleProductChange = (value, key) => {
@@ -98,14 +102,28 @@ const CreateProductForm = ({showProductForm}) => {
         console.log(response);
         //history.push("/");
       })
+      .catch(e => {
+          alert("error when editing this description.")
+          console.log(e);
+      })
     }
   
     let deleteProduct = (product) => {
       let newProducts = products.map(product => ({...product}));
       console.log(newProducts);
       let deleteProduct = newProducts.findIndex(p => p.id === product.id);
-      newProducts.splice(deleteProduct, 1);
-      setProducts(newProducts);
+      ky
+      .delete(`http://localhost:3001/api/products/${product.id}`)
+      .then(response => {
+        console.log(response);
+        //history.push("/");
+        newProducts.splice(deleteProduct, 1);
+        setProducts(newProducts);
+      })
+      .catch(e => {
+          alert("error when deleting this product")
+          console.log(e);
+      })
     }
   
     return (
