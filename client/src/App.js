@@ -7,6 +7,7 @@ import { Switch, Route, Link, useRouteMatch } from "react-router-dom";
 
 import { ViewProduct, ListProducts } from "./components/products";
 import { ViewCart } from "./components/cart";
+import { EditProducts } from "./components/admin"
 
 const API_LINK = "http://localhost:3001/api";
 
@@ -83,8 +84,8 @@ function App() {
         <Link style={padding} to="/">
           home
         </Link>
-        <Link style={padding} to="/new">
-          new
+        <Link style={padding} to="/admin">
+          admin
         </Link>
       </div>
       <div>
@@ -93,6 +94,9 @@ function App() {
         </Link>
       </div>
       <Switch>
+        <Route path="/admin">
+          <EditProducts products={products} setProducts={setProducts} />
+        </Route>
         <Route path="/cart">
           <ViewCart cart={cart} setCart={setCart} products={products} />
         </Route>
