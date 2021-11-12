@@ -10,6 +10,7 @@ const CreateProductForm = ({showProductForm}) => {
       categoryId: 0,
       image: ""
     });
+
     const addProduct = event => {
       console.log(newProduct);
       event.preventDefault();
@@ -19,6 +20,7 @@ const CreateProductForm = ({showProductForm}) => {
         console.log(response);
       })
     }
+
     const handleProductChange = (value, key) => {
       console.log(value);
       let p = {...newProduct};
@@ -65,7 +67,7 @@ const CreateProductForm = ({showProductForm}) => {
               value={newProduct.image}
               onChange={e => handleProductChange(e.target.value, "image")}/>
           </label>
-            <button type="submit">add new restaurant</button>
+            <button type="submit">add new product</button>
           </form>   
       )
       } else {
@@ -108,7 +110,7 @@ const CreateProductForm = ({showProductForm}) => {
   
     return (
       <div>
-        <button type="button" onClick={() => setShowProductForm(!showProductForm)}>+</button>
+        <button type="button" onClick={() => setShowProductForm(!showProductForm)}>{showProductForm ? "-" : "+"}</button>
         <CreateProductForm showProductForm={showProductForm} />
         {products.map((product) => {
           return (
