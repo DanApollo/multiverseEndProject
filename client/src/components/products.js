@@ -43,8 +43,7 @@ ViewProduct.propTypes = {
   addToCart: PropTypes.func,
 };
 
-const CategorySelect = ({ categories, category, setCategory }) => {
-  return (
+const CategorySelect = ({categories, category, setCategory, onChange}) => {  return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
         <InputLabel id="select-category-label">Categories</InputLabel>
@@ -53,7 +52,10 @@ const CategorySelect = ({ categories, category, setCategory }) => {
           id="select-category"
           value={category}
           label="Category"
-          onChange={(e) => setCategory(e.target.value)}
+          onChange={e => {
+            onChange();
+            setCategory(e.target.value)
+          }}
         >
           <MenuItem value={0}>All</MenuItem>
           {categories.map((category) => {
@@ -81,23 +83,51 @@ CategorySelect.propTypes = {
 <MenuItem value={3}>Thirty</MenuItem>
 */
 
-const ListProducts = ({ products, categories, category, setCategory }) => {
-  products = products.filter(
-    (product) => category === 0 || product.CategoryId === category
-  );
+const ListProducts = ({products, categories, category, setCategory, isAdmin}) => {  const productsList = products.filter(product => category == 0 || product.CategoryId == category);
+  const [descriptionFormsOpen, setDescriptionFormsOpen] = useState(productsList.map(() => false));
   return (
     <>
-      <CategorySelect
-        categories={categories}
-        category={category}
-        setCategory={setCategory}
-      />
-      {products.map((product) => {
-        return (
-          <Link key={product.id} to={`/products/${product.id}`}>
-            <ProductRow product={product}></ProductRow>
-          </Link>
-        );
+      <CategorySelect categories={categories} category={category} setCategory={setCategory} onChange={() => setDescriptionFormsOpen(array => array.map(() => false))}/>
+      {productsList.map((product, index) => {
+          return (
+            <div key={`product-${index}`}>
+              <Link key={product.id} to={`/products/${product.id}`}>
+                <ProductRow product={product}></ProductRow>
+              </Link>
+              {isAdmin && !descriptionFormsOpen[index] && (
+                <button onClick={() => setDescriptionFormsOpen(currentArray => {
+                  const updatedArray = [...currentArray];
+                  updatedArray[index] = true;
+                  return updatedArray;
+                })}>
+                  Change Description
+                </button>
+              )}
+              {descriptionFormsOpen[index] && (
+                <form onSubmit={async (event) => {
+                  event.preventDefault();
+                  const form = event.target;
+                  const data = { ...product, description: form.description.value };
+                  const response = await fetch(`http://localhost:3001/api/products/${product.id}`, {
+                    method: 'put',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                  });
+                  if (response.ok) {
+                    setDescriptionFormsOpen(currentArray => {
+                      const updatedArray = [...currentArray];
+                      updatedArray[index] = false;
+                      return updatedArray;
+                    })
+                  }
+                }}>
+                  <label htmlFor={`item-${product.id}`}>Add a new decription:</label>
+                  <input id={`item-${product.id}`} name="description" type="text"/>
+                  <input type="submit" value="Update description"/>
+                </form>
+              )}
+            </div>
+          );
       })}
     </>
   );
@@ -107,7 +137,8 @@ ListProducts.propTypes = {
   products: PropTypes.array,
   categories: PropTypes.array,
   category: PropTypes.number,
-  setCategory: PropTypes.func
+  setCategory: PropTypes.func,
+  isAdmin: PropTypes.bool
 };
 
 export { ProductRow, ViewProduct, ListProducts };
