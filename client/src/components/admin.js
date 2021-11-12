@@ -2,7 +2,7 @@ import ky from 'ky'
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const CreateProductForm = ({showProductForm}) => {
+const CreateProductForm = ({showProductForm, setProducts}) => {
     const [newProduct, setNewProduct] = useState({
       title: "",
       price: 0,
@@ -21,6 +21,18 @@ const CreateProductForm = ({showProductForm}) => {
       })
       .catch(e => {
         alert("error when creating product")
+        console.log(e);
+      })
+
+      ky.get("http://localhost:3001/api/products")
+      .json()
+      .then((response) => {
+        //console.log('promise fulfilled');
+        setProducts(response);
+        console.log(response);
+      })
+      .catch(e => {
+        alert("error when retrieving products")
         console.log(e);
       })
     }
@@ -80,7 +92,8 @@ const CreateProductForm = ({showProductForm}) => {
   }
   
   CreateProductForm.propTypes ={
-    showProductForm: PropTypes.bool
+    showProductForm: PropTypes.bool,
+    setProducts: PropTypes.func
   }
   
   const EditProducts = ({ products, setProducts }) => {
@@ -129,7 +142,7 @@ const CreateProductForm = ({showProductForm}) => {
     return (
       <div>
         <button type="button" onClick={() => setShowProductForm(!showProductForm)}>{showProductForm ? "-" : "+"}</button>
-        <CreateProductForm showProductForm={showProductForm} />
+        <CreateProductForm showProductForm={showProductForm} setProducts={setProducts} />
         {products.map((product) => {
           return (
             <>
