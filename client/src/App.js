@@ -8,10 +8,21 @@ import { Switch, Route, Link, useRouteMatch } from "react-router-dom";
 import { ViewProduct, ListProducts } from "./components/products";
 import { ViewCart } from "./components/cart";
 import { EditProducts } from "./components/admin"
+import PropTypes from "prop-types";
 
 const API_LINK = "http://localhost:3001/api";
 
+const Login = ({user, setUser}) => {
+  return <button onClick={() => setUser({...user, isAdmin: true})}>Login</button>
+}
+
+Login.propTypes = {
+  user: PropTypes.object,
+  setUser: PropTypes.func
+};
+
 function App() {
+  const [user, setUser] = useState({ isAdmin: false });
   const [cart, setCart] = useState(() => {
     const saved = localStorage.getItem("cart");
     const initialValue = JSON.parse(saved);
@@ -84,8 +95,11 @@ function App() {
         <Link style={padding} to="/">
           home
         </Link>
-        <Link style={padding} to="/admin">
+        {user.isAdmin && <Link style={padding} to="/admin">
           admin
+        </Link> }
+        <Link style={padding} to="/login">
+          login
         </Link>
       </div>
       <div>
@@ -94,6 +108,9 @@ function App() {
         </Link>
       </div>
       <Switch>
+        <Route path="/login">
+          <Login user={user} setUser={setUser} />
+        </Route>
         <Route path="/admin">
           <EditProducts products={products} setProducts={setProducts} />
         </Route>
