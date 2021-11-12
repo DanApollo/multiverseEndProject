@@ -1,0 +1,18 @@
+@startuml Usecase
+left to right direction
+:User: as user
+:Admin: as adm   
+adm --|> user
+rectangle E-Scooter_App {
+  (login) as li
+  (verify\npassword) as vp
+  (login error) as le
+  (access admin\ninterface) as aai
+  (+/-/edit\nproduct listings) as arepl
+  li .> vp : includes
+  le .> li : extends
+  aai .> arepl : includes
+}
+user --- li
+adm ---- aai
+@enduml
