@@ -3,7 +3,7 @@ left to right direction
 :User: as user
 :Admin: as adm   
 adm --|> user
-rectangle E-Scooter_App {
+rectangle Shop {
   (login) as li
   (verify\npassword) as vp
   (login error) as le
@@ -15,4 +15,38 @@ rectangle E-Scooter_App {
 }
 user --- li
 adm ---- aai
+@enduml
+
+@startuml Sequence
+skinparam Style strictuml
+skinparam SequenceMessageAlignment center
+User -> Client: Register account
+Client -> Server: Verify age
+alt If age 18 or over
+  Client <-- Server: Signup ok
+  User <- Client: Request login
+else Age below 18
+  Client <-- Server: Account rejected
+  User <- Client: Sign up error
+end
+User -> Client: Log in to account
+Client -> Server: Verify account
+alt If account valid
+  Client <-- Server: Account ok
+  User <- Client: Ready to scan scooter
+else account invalid
+  Client <-- Server: Account invalid
+  User <- Client: Re-enter information
+end
+User -> Client: Scan E-Scooter with app
+Client -> DB: Releases scooter from dock
+Server <-- DB: Scooter has been released
+alt If scooter damaged
+  User -> Client: Notifies app that scooter is damaged
+  Client -> Server: Logs damage report
+end
+User -> DB: Returns scooter to docking station
+Server <-- DB: Scooter has been returned
+Client <-- Server: Scooter has been returned
+User <- Client: Notifies of funds removed
 @enduml
