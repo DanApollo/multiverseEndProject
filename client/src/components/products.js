@@ -110,4 +110,4 @@ ListProducts.propTypes = {
   setCategory: PropTypes.func
 };
 
-export { ProductRow, ViewProduct, ListProducts };
+export { ProductRow, ViewProduct, ListProducts, CategorySelect };
