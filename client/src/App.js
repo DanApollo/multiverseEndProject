@@ -11,7 +11,7 @@ import { ViewCart } from "./components/cart";
 const API_LINK = "http://localhost:3001/api";
 
 function App() {
-  const [user, setUser] = useState({ isAdmin: true });
+  const [user/*, setUser*/] = useState({ isAdmin: true });
   const [cart, setCart] = useState(() => {
     const saved = localStorage.getItem("cart");
     const initialValue = JSON.parse(saved);

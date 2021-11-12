@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-const ProductRow = ({ product }) => {
+const ProductRow = ({ product, showDescription }) => {
   //console.log(product);
   return (
     <div className="flextest">
@@ -16,6 +16,7 @@ const ProductRow = ({ product }) => {
       </div>
       <div className="product-description-container">
         <h2>{product.title}</h2>
+        {showDescription && <p>{product?.description}</p>}
       </div>
     </div>
   );
@@ -23,6 +24,7 @@ const ProductRow = ({ product }) => {
 
 ProductRow.propTypes = {
   product: PropTypes.object,
+  showDescription: PropTypes.bool
 };
 
 const ViewProduct = (props) => {
@@ -43,7 +45,7 @@ ViewProduct.propTypes = {
   addToCart: PropTypes.func,
 };
 
-const CategorySelect = ({categories, category, setCategory, onChange}) => {  return (
+const CategorySelect = ({categories, category, setCategory, onChange }) => {  return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
         <InputLabel id="select-category-label">Categories</InputLabel>
@@ -74,7 +76,8 @@ const CategorySelect = ({categories, category, setCategory, onChange}) => {  ret
 CategorySelect.propTypes = {
   categories: PropTypes.array,
   category: PropTypes.number,
-  setCategory: PropTypes.func
+  setCategory: PropTypes.func,
+  onChange: PropTypes.func
 };
 
 /*
@@ -92,7 +95,7 @@ const ListProducts = ({products, categories, category, setCategory, isAdmin}) =>
           return (
             <div key={`product-${index}`}>
               <Link key={product.id} to={`/products/${product.id}`}>
-                <ProductRow product={product}></ProductRow>
+                <ProductRow product={product} showDescription={isAdmin}></ProductRow>
               </Link>
               {isAdmin && !descriptionFormsOpen[index] && (
                 <button onClick={() => setDescriptionFormsOpen(currentArray => {
