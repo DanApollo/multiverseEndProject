@@ -20,33 +20,31 @@ adm ---- aai
 @startuml Sequence
 skinparam Style strictuml
 skinparam SequenceMessageAlignment center
-User -> Client: Register account
-Client -> Server: Verify age
-alt If age 18 or over
-  Client <-- Server: Signup ok
-  User <- Client: Request login
-else Age below 18
-  Client <-- Server: Account rejected
-  User <- Client: Sign up error
-end
 User -> Client: Log in to account
 Client -> Server: Verify account
+Server -> DB: Check user admin status
+Server <-- DB: Response
 alt If account valid
   Client <-- Server: Account ok
-  User <- Client: Ready to scan scooter
+  Client <-- Server: .get response products
+  User <- Client: Send to landing page
 else account invalid
   Client <-- Server: Account invalid
   User <- Client: Re-enter information
 end
-User -> Client: Scan E-Scooter with app
-Client -> DB: Releases scooter from dock
-Server <-- DB: Scooter has been released
-alt If scooter damaged
-  User -> Client: Notifies app that scooter is damaged
-  Client -> Server: Logs damage report
+User -> Client: Click on categories
+User <-- Client: Filter for categories
+User -> Client: Add product to kart
+Client --> Server: .post request
+alt If product exists in kart
+  Server -> DB: Change product quantity in kart
+else If product not in kart
+  Server -> DB: Add product to kart wth quantity 1
 end
-User -> DB: Returns scooter to docking station
-Server <-- DB: Scooter has been returned
-Client <-- Server: Scooter has been returned
-User <- Client: Notifies of funds removed
+User -> Client: Click kart
+Client -> Server: Send user data
+Server -> DB: Find matching kart
+Server <-- DB: .get kart
+Client <- Server: Parse kart data
+User <- Client: Show kart
 @enduml
