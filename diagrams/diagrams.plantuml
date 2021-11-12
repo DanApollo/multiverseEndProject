@@ -1,0 +1,50 @@
+@startuml Usecase
+left to right direction
+:User: as user
+:Admin: as adm   
+adm --|> user
+rectangle Shop {
+  (login) as li
+  (verify\npassword) as vp
+  (login error) as le
+  (access admin\ninterface) as aai
+  (+/-/edit\nproduct listings) as arepl
+  li .> vp : includes
+  le .> li : extends
+  aai .> arepl : includes
+}
+user --- li
+adm ---- aai
+@enduml
+
+@startuml Sequence
+skinparam Style strictuml
+skinparam SequenceMessageAlignment center
+User -> Client: Log in to account
+Client -> Server: Verify account
+Server -> DB: Check user admin status
+Server <-- DB: Response
+alt If account valid
+  Client <-- Server: Account ok
+  Client <-- Server: .get response products
+  User <- Client: Send to landing page
+else account invalid
+  Client <-- Server: Account invalid
+  User <- Client: Re-enter information
+end
+User -> Client: Click on categories
+User <-- Client: Filter for categories
+User -> Client: Add product to kart
+Client --> Server: .post request
+alt If product exists in kart
+  Server -> DB: Change product quantity in kart
+else If product not in kart
+  Server -> DB: Add product to kart wth quantity 1
+end
+User -> Client: Click kart
+Client -> Server: Send user data
+Server -> DB: Find matching kart
+Server <-- DB: .get kart
+Client <- Server: Parse kart data
+User <- Client: Show kart
+@enduml

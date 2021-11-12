@@ -2,3 +2,9 @@
 
 # Entity Diagram
 ![Entity Diagram](https://github.com/SkyDanBinVan/multiverseEndProject/blob/main/diagrams/entityDiagram.svg?raw=true)
+
+# Site Map
+![Site Map](https://github.com/SkyDanBinVan/multiverseEndProject/blob/main/diagrams/siteMap.png?raw=true)
+
+# Sequence Diagram
+![Sequence](https://www.plantuml.com/plantuml/svg/ZLFBQiCm4BpxA_O77EWrX98q9L1eeSIqTo5lR65PSgHrqlnzLufVTTBIYmNQsT7Ep7hjIJXgQmqP7biq4XDVATC89sh8wA8HF3ab0sHQwS1lwBqeSADLOMeq198_w98FZmxIHzXgnHTBUBK5A0DaGKXfMqF9jH8m6ReJkYLyebE7om2uNWV0yzCIjYNA2jf0A_AQgNXkQdsFMgLfXEtHDzPuJ8GcU3dqP70IMkK9TFD4UF_ifeFOwdvzKI21wtYXSJPl9Nd6HeshTD2OeSc3GYrCham13HkJeEQcVWfb_Z7729e_iCSqkikGWtMr86LDme_UkCqdcsKDI45OMAVG9ntPoBPJEd0nqmriGhN9yrvpq5RniWpHJR9RDDO7btWhFFNczttufJpva7zi1vX7AqmnE0l7LXXIT1dmqS89dR7qAzUTSU5CvKZwy8TXFyIDscAkSVDoGMAsbpl5HOv2bY7oo31RoRW_K-hLcFcxSAmjJXcvRrQgjEThxvg7u5_m6m00 "Sequence")
